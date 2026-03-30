@@ -1,0 +1,50 @@
+.todo-details {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  font-family: sans-serif;
+
+  &__back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #666;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__content {
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+
+  &__title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+
+  &__text {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+
+  &__status {
+    &--done {
+      color: green;
+      font-weight: bold;
+    }
+    
+    &--pending {
+      color: orange;
+      font-weight: bold;
+    }
+  }
+}
