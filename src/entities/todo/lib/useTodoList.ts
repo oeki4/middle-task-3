@@ -1,28 +1,36 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/shared/lib/hooks/redux';
 import { getTodoList } from '../api/getTodoList';
-import { Todo } from '../model/types';
+import { setTodos } from '../model/slice';
+import { 
+    selectTodos, 
+    selectIsLoading, 
+    selectTodoError, 
+    selectFilters 
+} from '../model/selectors';
 
 /**
- * Кастомный хук для загрузки списка дел на клиенте.
+ * Кастомный хук для загрузки и фильтрации списка дел через Redux.
  */
 export const useTodoList = () => {
-    const [todos, setTodos] = useState<Todo[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const dispatch = useAppDispatch();
+    
+    const todos = useAppSelector(selectTodos);
+    const isLoading = useAppSelector(selectIsLoading);
+    const error = useAppSelector(selectTodoError);
+    const filters = useAppSelector(selectFilters);
 
     useEffect(() => {
         getTodoList()
             .then(data => {
-                setTodos(data.todos);
-                setLoading(false);
+                dispatch(setTodos(data.todos));
             })
             .catch(err => {
-                setError(err.message);
-                setLoading(false);
+                console.error(err);
             });
-    }, []);
+    }, [dispatch]);
 
-    return { todos, loading, error };
+    return { todos, loading: isLoading, error, filters };
 };
