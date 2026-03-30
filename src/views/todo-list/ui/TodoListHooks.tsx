@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, {useEffect } from 'react';
 import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '@/shared/lib/hooks/redux';
 import { selectTodos, selectFilters } from '@/entities/todo/model/selectors';
 import { toggleFilterSelection, setTodos, resetFilters } from '@/entities/todo/model/slice';
 import { getTodoList } from '@/entities/todo/api/getTodoList';
-import { Todo } from '@/entities/todo/model/types';
 import styles from './TodoListPage.module.scss';
 
 export const TodoListHooks = () => {
