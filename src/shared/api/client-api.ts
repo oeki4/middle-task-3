@@ -16,12 +16,20 @@ export const clientApi = async <T>(
 
     // 3. Склеиваем URL
     const url = `${BASE_URL}${endpoint}`;
+    const startTime = new Date().toISOString();
+    const start = performance.now();
+
+    console.log(`[Client Request] ${startTime} - Fetching: ${url}`);
 
     try {
         const response = await fetch(url, {
             ...options, // Здесь можно передать кэширование, сигналы отмены и т.д.
             headers,
         });
+
+        const endTime = new Date().toISOString();
+        const duration = (performance.now() - start).toFixed(2);
+        console.log(`[Client Response] ${endTime} - Completed (${duration}ms): ${url} - Status: ${response.status}`);
 
         // 4. Глобальная обработка ошибок (например, на 401 можно выбросить логаут)
         if (!response.ok) {
@@ -32,7 +40,9 @@ export const clientApi = async <T>(
         // 5. Парсинг ответа
         return (await response.json()) as T;
     } catch (error) {
-        console.error(`[Client API Error] ${url}:`, error);
+        const endTime = new Date().toISOString();
+        console.error(`[Client API Error] ${endTime} - ${url}:`, error);
         throw error;
     }
 };
+

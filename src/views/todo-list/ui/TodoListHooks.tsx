@@ -20,8 +20,6 @@ export const TodoListHooks = () => {
         getTodoList().then(data => dispatch(setTodos(data.todos)));
     }, [dispatch]);
 
-    // Вместо useState + useEffect используем useMemo для вычисляемых данных.
-    // Это стандарт React для предотвращения ошибок "cascading renders" и лишних циклов рендеринга.
     const filteredTodos = React.useMemo(() => {
         let result = [...originalTodos];
 

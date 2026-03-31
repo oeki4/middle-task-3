@@ -1,4 +1,7 @@
 import { TodoDetailsPage } from '@/views/todo-details';
+import { getTodoById } from '@/entities/todo';
+import { getUserById } from '@/entities/user';
+import { HydrateStore } from '@/shared/lib/redux/HydrateStore';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -6,5 +9,18 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
-  return <TodoDetailsPage id={id} />;
+  
+  // Серверная загрузка данных в компоненте страницы
+  const todo = await getTodoById(id);
+  const user = await getUserById(todo.userId);
+  
+  return (
+    <>
+      <HydrateStore todo={todo} user={user} />
+      <TodoDetailsPage todo={todo} user={user} />
+    </>
+  );
 }
+
+
+

@@ -68,9 +68,13 @@ export const todoSlice = createSlice({
                 const key = Object.keys(f)[0];
                 f[key].selected = [];
             });
+        },
+        setDetails: (state, action: PayloadAction<Todo>) => {
+            state.items = [action.payload]; // Или можно добавить отдельное поле currentItem
         }
     },
 });
 
-export const { setTodos, toggleFilterSelection, resetFilters } = todoSlice.actions;
+export const { setTodos, toggleFilterSelection, resetFilters, setDetails } = todoSlice.actions;
 export default todoSlice.reducer;
+

@@ -14,9 +14,17 @@ export const serverApi = async <T>(
 
 
   const url = `${BASE_URL}${endpoint}`;
+  const startTime = new Date().toISOString();
+  const start = performance.now();
+
+  console.log(`[Server Request] ${startTime} - Fetching: ${url}`);
 
   try {
     const response = await fetch(url, { ...options, headers });
+    const endTime = new Date().toISOString();
+    const duration = (performance.now() - start).toFixed(2);
+
+    console.log(`[Server Response] ${endTime} - Completed (${duration}ms): ${url} - Status: ${response.status}`);
 
     if (!response.ok) {
         const error = await response.json().catch(() => ({}));
@@ -25,7 +33,9 @@ export const serverApi = async <T>(
 
     return await response.json();
   } catch (error) {
-    console.error(`[Server API Error] ${url}:`, error);
+    const endTime = new Date().toISOString();
+    console.error(`[Server API Error] ${endTime} - ${url}:`, error);
     throw error;
   }
 };
+
