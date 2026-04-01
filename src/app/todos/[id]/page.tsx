@@ -3,6 +3,8 @@ import { getTodoById } from '@/entities/todo';
 import { getUserById } from '@/entities/user';
 import { HydrateStore } from '@/shared/lib/redux/HydrateStore';
 
+export const revalidate = 60;
+
 interface PageProps {
   params: Promise<{ id: string }>;
 }

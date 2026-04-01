@@ -1,5 +1,27 @@
+import NProgress from 'nprogress';
+
 // На клиенте используем только NEXT_PUBLIC_ переменные
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://dummyjson.com';
+
+// Настройка NProgress
+NProgress.configure({ showSpinner: true });
+
+// Счетчик активных запросов для корректного отображения лоадера
+let activeRequests = 0;
+
+const startProgress = () => {
+    if (activeRequests === 0) {
+        NProgress.start();
+    }
+    activeRequests++;
+};
+
+const stopProgress = () => {
+    activeRequests--;
+    if (activeRequests === 0) {
+        NProgress.done();
+    }
+};
 
 /**
  * Клиентский инстанс для запросов (Client Components)
@@ -20,6 +42,8 @@ export const clientApi = async <T>(
     const start = performance.now();
 
     console.log(`[Client Request] ${startTime} - Fetching: ${url}`);
+    
+    startProgress();
 
     try {
         const response = await fetch(url, {
@@ -43,6 +67,8 @@ export const clientApi = async <T>(
         const endTime = new Date().toISOString();
         console.error(`[Client API Error] ${endTime} - ${url}:`, error);
         throw error;
+    } finally {
+        stopProgress();
     }
 };
 

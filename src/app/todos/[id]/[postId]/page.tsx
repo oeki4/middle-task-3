@@ -2,6 +2,8 @@ import { PostDetailsPage } from '@/views/post-details';
 import { getPostById } from '@/entities/post';
 import { HydrateStore } from '@/shared/lib/redux/HydrateStore';
 
+export const revalidate = 60;
+
 interface PageProps {
   params: Promise<{ id: string; postId: string }>;
 }

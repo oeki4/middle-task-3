@@ -20,3 +20,21 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+#nprogress .bar {
+  background: #29d !important;
+  height: 4px !important;
+  box-shadow: 0 0 10px #29d, 0 0 5px #29d !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #29d, 0 0 5px #29d !important;
+}
+
+#nprogress .spinner-icon {
+  width: 24px !important;
+  height: 24px !important;
+  border-top-color: #29d !important;
+  border-left-color: #29d !important;
+  border-width: 3px !important;
+}
